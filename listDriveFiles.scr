@@ -1,12 +1,12 @@
-//returns an array with the name and fileID of the drive folder with folder id 'folderID'(as a string). Also shows all the files in the subfolders
 function getFileInfoOfFolder(folderID)
 {
   var fileInfo=[];
 
+  var folderName = DriveApp.getFolderById(folderID).getName();
   var currentFile, files = DriveApp.getFolderById(folderID).getFiles();
   while(files.hasNext()){
     currentFile = files.next();
-    fileInfo.push([currentFile.getName(),currentFile.getId()])
+    fileInfo.push([currentFile.getName(),currentFile.getId(), folderName])
   }
 
   var currentFolder, childFolders = DriveApp.getFolderById(folderID).getFolders(), childFileInfo;
@@ -22,7 +22,6 @@ function getFileInfoOfFolder(folderID)
 
 }
 
-//function to show how it works
 function getFileNames()
 {
   const sheetName = "GetFileIDs"
@@ -49,6 +48,6 @@ function getFileNames()
   }
 
   sheet.clear();
-  sheet.getRange(1,1,fileInfo.length,2).setValues(fileInfo);
+  sheet.getRange(1,1,fileInfo.length,3).setValues(fileInfo);
 
 }
